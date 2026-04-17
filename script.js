@@ -1,13 +1,22 @@
 // ==========================================
-// 1. CONFIGURACIÓN DE SUPABASE
+// 1. CONFIGURACIÓN SUPABASE (Ofuscación Hexadecimal)
 // ==========================================
-// Sustituye estas dos líneas con tus datos reales de Supabase
 const SB_URL = 'https://fetqdwxjgwqveqpxlkdo.supabase.co'; 
-const llave_oculta = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1abGRIRmtkM2hxWjNkeGRtVnhjSGhzYTJSdklpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpReU9EZzJPVGdzSW1WNGNDSTZNakE0T1RnMk5EWTVPSDAuLWU0S0JYMlFnSElmZ0M2Mm5CaG15MzBaMEkxMlNza1FtYkcxS0stUWhrSQ==";
 
-const supabaseKey = atob(llave_oculta);
+// La llave Base64 convertida a pares hexadecimales (asusta a la vista)
+const hexKey = "5a586c4b61474a4859326c506155704a5658704a4d55357053584e4a626c493159304e4a4e6b6c726346685751306f354c6d5635536e426a4d30317054326c4b656d5259516d685a62555a36576c4e4a63306c75536d7861615532535357313662456449526d746b4d326878576a4e6b65475274566e686a5347687a59544a53646b6c7064326c6a62546c7a576c4e4a4e6b6c74526e56694d6a527054454e4b63466c5955576c50616b557a546e7052655539455a7a4a505647647a535731574e474e4453545a4e616b45305431526e4d6b354557545650534441754c57553053304a594d6c466e53456c6d5a304d324d6d3543614731354d7a42614d456c784d6c4e7a61314674596b6378533073745557687253513d3d";
 
-// Usamos la variable 'db' para evitar el error de "Identifier already declared"
+// Función que decodifica de Hexadecimal a Texto en memoria
+function fromHex(hexStr) {
+    let str = '';
+    for (let i = 0; i < hexStr.length; i += 2) {
+        str += String.fromCharCode(parseInt(hexStr.substr(i, 2), 16));
+    }
+    return str;
+}
+
+// Reconstruimos la llave y conectamos
+const supabaseKey = atob(fromHex(hexKey));
 const db = window.supabase.createClient(SB_URL, supabaseKey);
 
 // ==========================================
