@@ -1,14 +1,24 @@
 // ==========================================
-// 1. CONFIGURACIÓN SUPABASE (DOM Hiding - Capa 9)
+// 1. CONFIGURACIÓN SUPABASE (Capa 10 - IIFE Closure)
 // ==========================================
 const SB_URL = 'https://fetqdwxjgwqveqpxlkdo.supabase.co'; 
+let db; // Variable global solo para usar la BD, sin exponer la llave
 
-// Extraemos la llave de forma segura desde el esqueleto del HTML
-const configElement = document.getElementById('db-config');
-const supabaseKey = configElement ? configElement.getAttribute('data-key') : "";
-
-// Inicializamos la conexión
-const db = window.supabase.createClient(SB_URL, supabaseKey);
+// 🚀 BURBUJA AUTOEJECUTABLE (IIFE)
+(function initDatabase() {
+    // 1. Armamos la llave en este entorno cerrado (Closure)
+    const p1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.";
+    const p2 = "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZldHFkd3hqZ3dxdmVxcHhsa2RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyODg2OTgsImV4cCI6MjA4OTg2NDY5OH0.";
+    const p3 = "-e4KBX2QgHIfgC62nBhmy30Z0I12SskQmbG1KK-QhkI";
+    
+    const secretKey = p1 + p2 + p3;
+    
+    // 2. Conectamos con Supabase
+    db = window.supabase.createClient(SB_URL, secretKey);
+    
+    // 3. ¡PUM! Al terminar de leer esta línea, 'secretKey', 'p1', 'p2' y 'p3' 
+    // son destruidas de la memoria por el Garbage Collector de JavaScript.
+})();
 
 // ==========================================
 // 2. LÓGICA DE LAS VENTANAS EMERGENTES (MODALS)
