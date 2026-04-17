@@ -1,27 +1,13 @@
 // ==========================================
-// 1. CONFIGURACIÓN SUPABASE (Ofuscación BigInt Matemático)
+// 1. CONFIGURACIÓN SUPABASE (DOM Hiding - Capa 9)
 // ==========================================
 const SB_URL = 'https://fetqdwxjgwqveqpxlkdo.supabase.co'; 
 
-// Tu API Key convertida en un solo número entero (BigInt)
-// OJO: La 'n' al final es obligatoria para que el navegador no redondee el número
-const giantKey = 325107289943835301567169038289173430989254416265133392209669403326094547422214826592573882541857042746475474739664941699678552908563995303252367141130785312117166904182578356924241785328077950361964713989504540355576217469036450604467145256017935657916405186645142292670773303220091267794886182181714065369188973928640335019287986385114043370384847675443579163196568799372128368184223093341427532127181163034075360487414185405085577211299591629441881207934823756263490690882223954435371781977843198793n;
+// Extraemos la llave de forma segura desde el esqueleto del HTML
+const configElement = document.getElementById('db-config');
+const supabaseKey = configElement ? configElement.getAttribute('data-key') : "";
 
-// 1. Convertimos el súper número de regreso a Hexadecimal (Base 16)
-let hexString = giantKey.toString(16);
-
-// 2. Por si el número perdió un cero a la izquierda, lo rellenamos para que sean pares exactos
-if (hexString.length % 2 !== 0) {
-    hexString = '0' + hexString;
-}
-
-// 3. Traducimos los pares hexadecimales a las letras de tu llave JWT
-let supabaseKey = '';
-for (let i = 0; i < hexString.length; i += 2) {
-    supabaseKey += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
-}
-
-// Inicializamos la base de datos
+// Inicializamos la conexión
 const db = window.supabase.createClient(SB_URL, supabaseKey);
 
 // ==========================================
