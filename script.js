@@ -1,25 +1,31 @@
 // ==========================================
-// 1. CONFIGURACIÓN SUPABASE (Cifrado XOR - Capa 7)
+// 1. CONFIGURACIÓN SUPABASE (Ofuscación BigInt Matemático)
 // ==========================================
 const SB_URL = 'https://fetqdwxjgwqveqpxlkdo.supabase.co'; 
 
-// Esta es TU llave real cifrada matemáticamente (Generada bit a bit)
-const _data = [36, 6, 23, 11, 11, 2, 60, 20, 22, 10, 50, 48, 62, 53, 56, 3, 53, 115, 32, 14, 55, 62, 16, 55, 31, 62, 14, 22, 23, 62, 29, 29, 28, 88, 22, 17, 3, 20, 26, 44, 18, 10, 11, 5, 23, 0, 52, 1, 48, 54, 10, 11, 21, 61, 68, 65, 3, 44, 49, 10, 69, 58, 26, 60, 45, 12, 110, 6, 17, 49, 58, 1, 45, 68, 16, 61, 52, 29, 65, 17, 51, 61, 101, 26, 2, 45, 29, 115, 21, 61, 0, 54, 52, 24, 55, 62, 14, 54, 12, 5, 117, 3, 31, 51, 22, 48, 54, 30, 46, 52, 52, 24, 60, 50, 6, 20, 61, 53, 40, 115, 61, 16, 31, 11, 122, 57, 56, 26, 32, 20, 10, 121, 53, 61, 28, 48, 52, 1, 65, 41, 15, 43, 6, 55, 65, 0, 55, 49, 61, 124, 26, 6, 45, 28, 48, 0, 41, 6, 125, 15, 45, 0, 4, 3, 63, 63, 3, 4, 42, 63, 52, 27, 45, 24, 10, 40, 6, 18, 50, 49, 0, 29, 54, 65, 0, 60, 4, 34, 121, 50, 1, 26, 42, 10, 52, 0, 20, 113, 24, 5, 14, 53, 69, 21, 122, 28, 6, 22, 10, 40, 17, 121, 52, 24, 1, 52, 29, 31, 31];
+// Tu API Key convertida en un solo número entero (BigInt)
+// OJO: La 'n' al final es obligatoria para que el navegador no redondee el número
+const giantKey = 325107289943835301567169038289173430989254416265133392209669403326094547422214826592573882541857042746475474739664941699678552908563995303252367141130785312117166904182578356924241785328077950361964713989504540355576217469036450604467145256017935657916405186645142292670773303220091267794886182181714065369188973928640335019287986385114043370384847675443579163196568799372128368184223093341427532127181163034075360487414185405085577211299591629441881207934823756263490690882223954435371781977843198793n;
 
-const _pass = "ESCOM"; // Nuestra clave secreta
+// 1. Convertimos el súper número de regreso a Hexadecimal (Base 16)
+let hexString = giantKey.toString(16);
 
-// Función XOR in-place
-function xor(arr, key) {
-    return arr.map((n, i) => String.fromCharCode(n ^ key.charCodeAt(i % key.length))).join('');
+// 2. Por si el número perdió un cero a la izquierda, lo rellenamos para que sean pares exactos
+if (hexString.length % 2 !== 0) {
+    hexString = '0' + hexString;
 }
 
-// Reconstrucción final
-const supabaseKey = xor(_data, _pass);
+// 3. Traducimos los pares hexadecimales a las letras de tu llave JWT
+let supabaseKey = '';
+for (let i = 0; i < hexString.length; i += 2) {
+    supabaseKey += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
+}
+
+// Inicializamos la base de datos
 const db = window.supabase.createClient(SB_URL, supabaseKey);
 
-
 // ==========================================
-// 2. LÓGICA DE LA VENTANA EMERGENTE (MODAL)
+// 2. LÓGICA DE LAS VENTANAS EMERGENTES (MODALS)
 // ==========================================
 const modalRegistro = document.getElementById("modalRegistro");
 const btnRegistro = document.getElementById("btnRegistro");
