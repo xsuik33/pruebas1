@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech | Gestión de Biblioteca ESCOM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Biblio<span>Tech</span></div>
+        <div class="nav-links">
+            <a href="#" class="active">Catálogo</a>
+            <a href="#">Préstamos</a>
+            <a href="#">Comunidad</a>
+            <button class="btn-primary" id="btnRegistro">+ Registro</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Tu biblioteca, reinventada.</h1>
+            <p>Gestión inteligente para el acervo cultural de la comunidad politécnica.</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar por título, autor o categoría...">
+                <button onclick="buscarLibro()">Buscar</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="stats">
+            <div class="stat-card"><h3>1,250</h3><p>Libros Totales</p></div>
+            <div class="stat-card"><h3>45</h3><p>Prestados hoy</p></div>
+            <div class="stat-card"><h3>12</h3><p>Nuevos ingresos</p></div>
+        </section>
+
+        <div class="section-title">
+            <h2>Colección de Autores Imprescindibles</h2>
+            <div class="line" style="width: 50px; height: 4px; background: #3d5afe; border-radius: 2px; margin-top: 10px;"></div>
+        </div>
+
+        <div class="grid" id="bookGrid"></div>
+    </main>
+
+    <div id="modalRegistro" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registro Comunidad IPN</h2>
+            <p style="color: #94a3b8; margin-bottom: 20px;">Crea tu cuenta con seguridad en la nube.</p>
+            
+            <form id="regForm">
+                <input type="text" id="curp" placeholder="CURP (18 caracteres)" required maxlength="18">
+                <input type="text" id="nombre" placeholder="Nombre Completo" required>
+                <input type="text" id="user" placeholder="Nombre de Usuario (ej. saul01)" required>
+                <input type="password" id="pass" placeholder="Contraseña" required>
+                
+                <label style="display:block; margin-top:10px; font-size:0.8rem; color:#3d5afe">Selecciona tu Rol:</label>
+                <select id="tipo" onchange="actualizarPlaceholder()">
+                    <option value="alumno">Alumno</option>
+                    <option value="profesor">Profesor</option>
+                </select>
+                
+                <input type="text" id="id_esc" placeholder="Número de Boleta" required>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 15px;">Registrar en Supabase</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

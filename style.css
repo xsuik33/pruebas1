@@ -1,0 +1,245 @@
+:root {
+    --bg: #05070a;
+    --surface: #0f121a;
+    --primary: #3d5afe;
+    --primary-hover: #2a41d4;
+    --text-main: #ffffff;
+    --text-dim: #94a3b8;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --error: #ef4444;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+}
+.modal {
+    display: none; 
+    position: fixed !important; 
+    z-index: 9999 !important; /* Valor muy alto para que salga al frente */
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    background: radial-gradient(circle at 50% -20%, #1e266d 0%, #05070a 50%) no-repeat fixed;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 1rem 10%; 
+    background: rgba(5, 7, 10, 0.8);
+    backdrop-filter: blur(20px); 
+    border-bottom: 1px solid var(--card-border);
+    position: sticky; 
+    top: 0; 
+    z-index: 100;
+}
+
+.logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }
+.logo span { color: var(--primary); }
+
+.nav-links a { 
+    color: var(--text-dim); 
+    text-decoration: none; 
+    margin-right: 25px; 
+    font-size: 0.9rem; 
+    transition: 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: white; }
+
+/* Botones */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero { padding: 80px 10% 40px; text-align: center; }
+.hero h1 { font-size: 3.5rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
+.hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; margin: 0 auto 40px; }
+
+.search-bar {
+    max-width: 600px; 
+    margin: 0 auto; 
+    display: flex;
+    background: var(--surface); 
+    padding: 6px; 
+    border-radius: 16px;
+    border: 1px solid var(--card-border);
+}
+
+.search-bar input { 
+    flex: 1; 
+    background: transparent; 
+    border: none; 
+    color: white; 
+    padding: 12px 20px; 
+    outline: none; 
+    font-size: 1rem;
+}
+
+/* Contenedor y Grid */
+.container { padding: 40px 10%; }
+
+.stats {
+    display: flex; 
+    gap: 30px; 
+    margin-bottom: 60px;
+}
+
+.stat-card {
+    background: var(--surface);
+    padding: 20px 30px;
+    border-radius: 16px;
+    border-left: 4px solid var(--primary);
+    flex: 1;
+}
+
+.grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; 
+    margin-top: 40px;
+}
+
+.book-card {
+    background: var(--surface); 
+    border: 1px solid var(--card-border);
+    border-radius: 24px; 
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.book-card:hover { 
+    transform: translateY(-12px); 
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.book-img {
+    width: 100%; 
+    height: 200px; 
+    background: linear-gradient(135deg, #1e266d, #0f121a);
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 4.5rem;
+}
+
+.book-info { padding: 25px; }
+.book-info h4 { font-size: 1.2rem; margin-bottom: 8px; }
+.book-info span { color: var(--text-dim); display: block; margin-bottom: 15px; }
+
+/* MODAL - VENTANA EMERGENTE CORREGIDA */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(12px); /* Desenfoque de fondo pro */
+}
+
+.modal-content {
+    background-color: var(--surface);
+    margin: 5vh auto;
+    padding: 40px;
+    border: 1px solid var(--card-border);
+    border-radius: 28px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    position: relative;
+    animation: modalAppear 0.4s ease-out;
+}
+
+@keyframes modalAppear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close {
+    position: absolute;
+    right: 25px;
+    top: 20px;
+    color: var(--text-dim);
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.close:hover { color: white; }
+
+/* Formulario dentro del Modal */
+#regForm input, #regForm select {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    background: #161b22;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    color: white;
+    font-size: 0.95rem;
+}
+
+#regForm input:focus {
+    border-color: var(--primary);
+    outline: none;
+    background: #1c2128;
+}
+
+#regForm label {
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-top: 15px;
+    display: block;
+    font-weight: 600;
+}
+/* --- FIX DE EMERGENCIA PARA EL MODAL --- */
+#modalRegistro {
+    display: none; /* Se activa con JS */
+    position: fixed !important; /* !important obliga a que ignore otros estilos */
+    z-index: 9999 !important; 
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(15px);
+    overflow-y: auto; /* Por si el cel es chico y el form es largo */
+}
+
+.modal-content {
+    background-color: #0f121a !important;
+    margin: 50px auto !important; /* Lo separa del tope */
+    padding: 30px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px !important;
+    max-width: 450px !important;
+    position: relative !important;
+    display: block !important; /* Evita que se hereden flexbox raros */
+}
