@@ -1,23 +1,20 @@
 // ==========================================
-// 1. CONFIGURACIÓN SUPABASE (Cifrado XOR - Capa 7)
+// 1. CONFIGURACIÓN SUPABASE (XOR Real - Capa 7)
 // ==========================================
 const SB_URL = 'https://fetqdwxjgwqveqpxlkdo.supabase.co'; 
 
-// Esta es tu llave cifrada matemáticamente (Parece una lista de números al azar)
+// Esta es tu llave real ya procesada para que parezca basura
 const _data = [36, 6, 23, 11, 11, 2, 60, 20, 22, 10, 50, 48, 62, 53, 56, 3, 53, 115, 32, 14, 55, 62, 16, 55, 31, 62, 14, 22, 23, 62, 29, 29, 28, 88, 22, 17, 3, 20, 26, 44, 18, 10, 11, 5, 23, 0, 52, 1, 48, 54, 10, 11, 21, 61, 68, 65, 3, 44, 49, 10, 69, 58, 26, 60, 45, 12, 110, 6, 17, 49, 58, 1, 45, 68, 16, 61, 52, 29, 65, 17, 51, 61, 101, 26, 2, 45, 29, 115, 21, 61, 0, 54, 52, 24, 55, 62, 14, 54, 12, 5, 117, 3, 31, 51, 22, 48, 54, 30, 46, 52, 52, 24, 60, 50, 6, 20, 61, 53, 40, 115, 61, 16, 31, 11, 122, 57, 56, 26, 32, 20, 10, 121, 53, 61, 28, 48, 52, 1, 65, 41, 15, 43, 6, 55, 65, 0, 55, 49, 61, 124, 26, 6, 45, 28, 48, 0, 41, 6, 125, 15, 45, 0, 4, 3, 63, 63, 3, 4, 42, 63, 52, 27, 45, 24, 10, 40, 6, 18, 50, 49, 0, 29, 54, 65, 0, 60, 4, 34, 121, 50, 1, 26, 42, 10, 52, 0, 20, 113, 24, 5, 14, 53, 69, 21, 122, 28, 6, 22, 10, 40, 17, 121, 52, 24, 1, 52, 29, 31, 31];
 
-// La "llave maestra" para el descifrado
-const _secret = "ESCOM";
+const _pass = "ESCOM"; // Tu clave para "desbloquear" los bits
 
-// Función que aplica la operación XOR (Exclusive OR) bit a bit
-function _decrypt(arr, key) {
-    return arr.map((num, i) => 
-        String.fromCharCode(num ^ key.charCodeAt(i % key.length))
-    ).join('');
+// Esta función hace la magia del XOR (vuelve los 1 en 0 y viceversa según la clave)
+function xor(arr, key) {
+    return arr.map((n, i) => String.fromCharCode(n ^ key.charCodeAt(i % key.length))).join('');
 }
 
-// Reconstruimos la API Key y conectamos
-const supabaseKey = _decrypt(_data, _secret);
+// Reconstruimos la llave original
+const supabaseKey = xor(_data, _pass);
 const db = window.supabase.createClient(SB_URL, supabaseKey);
 
 // ==========================================
