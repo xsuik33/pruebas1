@@ -163,3 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Asegurarnos de que el placeholder esté correcto al cargar
     actualizarPlaceholder();
 });
+
+    // Asegurarnos de que el placeholder esté correcto al cargar
+    actualizarPlaceholder();
+});
